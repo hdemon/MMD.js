@@ -10,10 +10,12 @@
     }
 
     TextureManager.prototype.get = function(type, url) {
-      var gl, texture;
-      var _this = this;
+      var gl, texture,
+        _this = this;
       texture = this.store[url];
-      if (texture) return texture;
+      if (texture) {
+        return texture;
+      }
       gl = this.mmd.gl;
       texture = this.store[url] = gl.createTexture();
       loadImage(url, function(img) {
@@ -31,7 +33,9 @@
         }
         gl.generateMipmap(gl.TEXTURE_2D);
         gl.bindTexture(gl.TEXTURE_2D, null);
-        if (_this.onload) _this.onload(img);
+        if (_this.onload) {
+          _this.onload(img);
+        }
         return --_this.pendingCount;
       });
       this.pendingCount++;

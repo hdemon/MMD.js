@@ -16,8 +16,8 @@
     }
 
     Motion.prototype.load = function(callback) {
-      var xhr;
-      var _this = this;
+      var xhr,
+        _this = this;
       xhr = new XMLHttpRequest;
       xhr.open('GET', this.path, true);
       xhr.responseType = 'arraybuffer';
@@ -61,9 +61,9 @@
       length = view.getUint32(offset, true);
       offset += size_Uint32;
       this.bone = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(new BoneMotion(buffer, view, offset + i * BoneMotion.size));
         }
         return _results;
@@ -76,9 +76,9 @@
       length = view.getUint32(offset, true);
       offset += size_Uint32;
       this.morph = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(new MorphMotion(buffer, view, offset + i * MorphMotion.size));
         }
         return _results;
@@ -91,9 +91,9 @@
       length = view.getUint32(offset, true);
       offset += size_Uint32;
       this.camera = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(new CameraMotion(buffer, view, offset + i * CameraMotion.size));
         }
         return _results;
@@ -106,9 +106,9 @@
       length = view.getUint32(offset, true);
       offset += size_Uint32;
       this.light = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(new LightMotion(buffer, view, offset + i * LightMotion.size));
         }
         return _results;
@@ -121,9 +121,9 @@
       length = view.getUint32(offset, true);
       offset += size_Uint32;
       this.selfshadow = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(new SelfShadowMotion(buffer, view, offset + i * SelfShadowMotion.size));
         }
         return _results;
@@ -138,7 +138,7 @@
   BoneMotion = (function() {
 
     function BoneMotion(buffer, view, offset) {
-      var i, tmp;
+      var i, tmp, _i;
       this.name = sjisArrayToString(new Uint8Array(buffer, offset, 15));
       offset += size_Uint8 * 15;
       this.frame = view.getUint32(offset, true);
@@ -160,7 +160,7 @@
       tmp[3] = view.getFloat32(offset, true);
       offset += size_Float32;
       this.rotation = new Float32Array(tmp);
-      for (i = 0; i < 64; i++) {
+      for (i = _i = 0; _i < 64; i = ++_i) {
         tmp[i] = view.getUint8(offset, true);
         offset += size_Uint8;
       }
@@ -193,7 +193,7 @@
   CameraMotion = (function() {
 
     function CameraMotion(buffer, view, offset) {
-      var i, tmp;
+      var i, tmp, _i;
       this.frame = view.getUint32(offset, true);
       offset += size_Uint32;
       this.distance = -view.getFloat32(offset, true);
@@ -213,7 +213,7 @@
       tmp[2] = view.getFloat32(offset, true);
       offset += size_Float32;
       this.rotation = new Float32Array(tmp);
-      for (i = 0; i < 24; i++) {
+      for (i = _i = 0; _i < 24; i = ++_i) {
         tmp[i] = view.getUint8(offset, true);
         offset += size_Uint8;
       }

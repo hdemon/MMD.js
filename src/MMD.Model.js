@@ -38,8 +38,8 @@
     }
 
     Model.prototype.load = function(callback) {
-      var xhr;
-      var _this = this;
+      var xhr,
+        _this = this;
       xhr = new XMLHttpRequest;
       xhr.open('GET', this.directory + '/' + this.filename, true);
       xhr.responseType = 'arraybuffer';
@@ -68,7 +68,9 @@
       offset = this.getMorphOrder(buffer, view, offset);
       offset = this.getBoneGroupNames(buffer, view, offset);
       offset = this.getBoneTable(buffer, view, offset);
-      if (offset >= length) return;
+      if (offset >= length) {
+        return;
+      }
       offset = this.getEnglishFlag(buffer, view, offset);
       if (this.english_flag) {
         offset = this.getEnglishName(buffer, view, offset);
@@ -76,9 +78,13 @@
         offset = this.getEnglishMorphNames(buffer, view, offset);
         offset = this.getEnglishBoneGroupNames(buffer, view, offset);
       }
-      if (offset >= length) return;
+      if (offset >= length) {
+        return;
+      }
       offset = this.getToonFileNames(buffer, view, offset);
-      if (offset >= length) return;
+      if (offset >= length) {
+        return;
+      }
       offset = this.getRigidBodies(buffer, view, offset);
       return offset = this.getJoints(buffer, view, offset);
     };
@@ -103,9 +109,9 @@
       length = view.getUint32(offset, true);
       offset += size_Uint32;
       this.vertices = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(new Vertex(buffer, view, offset + i * Vertex.size));
         }
         return _results;
@@ -114,11 +120,11 @@
     };
 
     Model.prototype.getTriangles = function(buffer, view, offset) {
-      var i, length;
+      var i, length, _i;
       length = view.getUint32(offset, true);
       offset += size_Uint32;
       this.triangles = new Uint16Array(length);
-      for (i = 0; i < length; i += 3) {
+      for (i = _i = 0; _i < length; i = _i += 3) {
         this.triangles[i + 1] = view.getUint16(offset + i * size_Uint16, true);
         this.triangles[i] = view.getUint16(offset + (i + 1) * size_Uint16, true);
         this.triangles[i + 2] = view.getUint16(offset + (i + 2) * size_Uint16, true);
@@ -131,9 +137,9 @@
       length = view.getUint32(offset, true);
       offset += size_Uint32;
       this.materials = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(new Material(buffer, view, offset + i * Material.size));
         }
         return _results;
@@ -146,9 +152,9 @@
       length = view.getUint16(offset, true);
       offset += size_Uint16;
       this.bones = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(new Bone(buffer, view, offset + i * Bone.size));
         }
         return _results;
@@ -161,9 +167,9 @@
       length = view.getUint16(offset, true);
       offset += size_Uint16;
       this.iks = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           ik = new IK(buffer, view, offset);
           offset += ik.getSize();
           _results.push(ik);
@@ -178,9 +184,9 @@
       length = view.getUint16(offset, true);
       offset += size_Uint16;
       this.morphs = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           morph = new Morph(buffer, view, offset);
           offset += morph.getSize();
           _results.push(morph);
@@ -195,9 +201,9 @@
       length = view.getUint8(offset);
       offset += size_Uint8;
       this.morph_order = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(view.getUint16(offset + i * size_Uint16, true));
         }
         return _results;
@@ -211,9 +217,9 @@
       offset += size_Uint8;
       block = new Uint8Array(buffer, offset, 50 * length);
       this.bone_group_names = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(sjisArrayToString(slice.call(block, i * 50, (i + 1) * 50)));
         }
         return _results;
@@ -226,9 +232,9 @@
       length = view.getUint32(offset, true);
       offset += size_Uint32;
       this.bone_table = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           bone = {};
           bone.index = view.getUint16(offset, true);
           offset += size_Uint16;
@@ -259,9 +265,9 @@
       length = this.bones.length;
       block = new Uint8Array(buffer, offset, 20 * length);
       this.english_bone_names = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(sjisArrayToString(slice.call(block, i * 20, (i + 1) * 20)));
         }
         return _results;
@@ -274,9 +280,9 @@
       length = this.morphs.length - 1;
       block = new Uint8Array(buffer, offset, 20 * length);
       this.english_morph_names = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(sjisArrayToString(slice.call(block, i * 20, (i + 1) * 20)));
         }
         return _results;
@@ -289,9 +295,9 @@
       length = this.bone_group_names.length;
       block = new Uint8Array(buffer, offset, 50 * length);
       this.english_bone_group_names = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(sjisArrayToString(slice.call(block, i * 50, (i + 1) * 50)));
         }
         return _results;
@@ -303,9 +309,9 @@
       var block, i;
       block = new Uint8Array(buffer, offset, 100 * 10);
       this.toon_file_names = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; i < 10; i++) {
+        for (i = _i = 0; _i < 10; i = ++_i) {
           _results.push(sjisArrayToString(slice.call(block, i * 100, (i + 1) * 100)));
         }
         return _results;
@@ -318,9 +324,9 @@
       length = view.getUint32(offset, true);
       offset += size_Uint32;
       this.rigid_bodies = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(new RigidBody(buffer, view, offset + i * RigidBody.size));
         }
         return _results;
@@ -333,9 +339,9 @@
       length = view.getUint32(offset, true);
       offset += size_Uint32;
       this.joints = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= length ? i < length : i > length; 0 <= length ? i++ : i--) {
+        for (i = _i = 0; 0 <= length ? _i < length : _i > length; i = 0 <= length ? ++_i : --_i) {
           _results.push(new Joint(buffer, view, offset + i * Joint.size));
         }
         return _results;
@@ -419,9 +425,9 @@
       this.face_vert_count = view.getUint32(offset, true);
       offset += size_Uint32;
       this.texture_file_name = sjisArrayToString((function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; i < 20; i++) {
+        for (i = _i = 0; _i < 20; i = ++_i) {
           _results.push(view.getUint8(offset + size_Uint8 * i));
         }
         return _results;
@@ -479,9 +485,9 @@
       this.control_weight = view.getFloat32(offset, true);
       offset += size_Float32;
       this.child_bones = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= chain_length ? i < chain_length : i > chain_length; 0 <= chain_length ? i++ : i--) {
+        for (i = _i = 0; 0 <= chain_length ? _i < chain_length : _i > chain_length; i = 0 <= chain_length ? ++_i : --_i) {
           _results.push(view.getUint16(offset + size_Uint16 * i, true));
         }
         return _results;
@@ -507,9 +513,9 @@
       this.type = view.getUint8(offset);
       offset += size_Uint8;
       this.vert_data = (function() {
-        var _results;
+        var _i, _results;
         _results = [];
-        for (i = 0; 0 <= vert_count ? i < vert_count : i > vert_count; 0 <= vert_count ? i++ : i--) {
+        for (i = _i = 0; 0 <= vert_count ? _i < vert_count : _i > vert_count; i = 0 <= vert_count ? ++_i : --_i) {
           data = {};
           data.index = view.getUint32(offset, true);
           offset += size_Uint32;
